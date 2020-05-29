@@ -8,13 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.udemy.udemySpringHibernate.domain.Categoria;
+import com.udemy.udemySpringHibernate.domain.Produto;
 import com.udemy.udemySpringHibernate.repositories.CategoriaRepository;
+import com.udemy.udemySpringHibernate.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class UdemySpringHibernateApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private ProdutoRepository produtoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -27,8 +31,22 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		
-		//para guardar no BD, usa-se o repository que é o responsavel por comunicar com a BD
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
+		
+		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
+		cat2.getProdutos().addAll(Arrays.asList(p2));
+		
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+		
+		
+		
+//para guardar no BD, usa-se o repository que é o responsavel por comunicar com a BD
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		
 		
