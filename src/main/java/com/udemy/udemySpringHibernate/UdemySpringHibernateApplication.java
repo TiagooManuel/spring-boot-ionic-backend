@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.udemy.udemySpringHibernate.domain.Categoria;
+import com.udemy.udemySpringHibernate.domain.Cidade;
+import com.udemy.udemySpringHibernate.domain.Estado;
 import com.udemy.udemySpringHibernate.domain.Produto;
 import com.udemy.udemySpringHibernate.repositories.CategoriaRepository;
+import com.udemy.udemySpringHibernate.repositories.CidadeRepository;
+import com.udemy.udemySpringHibernate.repositories.EstadoRepository;
 import com.udemy.udemySpringHibernate.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -19,6 +23,10 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
 	
 	
 	public static void main(String[] args) {
@@ -41,14 +49,26 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
-		
-		
-		
-//para guardar no BD, usa-se o repository que é o responsavel por comunicar com a BD
+	
+		//para guardar no BD, usa-se o repository que é o responsavel por comunicar com a BD
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		
+		Estado est1 = new Estado(null, "Minas Gerais");
+		Estado est2 = new Estado(null, "São Paulo");
+		
+		//Quando é ManyToOne fazemos a relação no próprio construtor
+		Cidade c1 = new Cidade(null, "Uberlândia", est1);
+		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+		
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est2.getCidades().addAll(Arrays.asList(c2,c3));
+		
+		
+		estadoRepository.saveAll(Arrays.asList(est1,est2));
+		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
 	}
 
