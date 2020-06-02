@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.udemy.udemySpringHibernate.domain.Categoria;
 import com.udemy.udemySpringHibernate.domain.Cidade;
+import com.udemy.udemySpringHibernate.domain.Cliente;
+import com.udemy.udemySpringHibernate.domain.Endereco;
 import com.udemy.udemySpringHibernate.domain.Estado;
 import com.udemy.udemySpringHibernate.domain.Produto;
+import com.udemy.udemySpringHibernate.domain.enumns.TipoCliente;
 import com.udemy.udemySpringHibernate.repositories.CategoriaRepository;
 import com.udemy.udemySpringHibernate.repositories.CidadeRepository;
+import com.udemy.udemySpringHibernate.repositories.ClienteRepository;
+import com.udemy.udemySpringHibernate.repositories.EnderecoRepository;
 import com.udemy.udemySpringHibernate.repositories.EstadoRepository;
 import com.udemy.udemySpringHibernate.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -69,6 +78,19 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "321432532", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("9121412421","93124624"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apt 3", "Jardim", "321323231", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 8", "Centro", "12423423", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		
 		
 	}
 
