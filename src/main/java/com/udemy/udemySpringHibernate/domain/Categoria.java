@@ -8,11 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Categoria implements Serializable {
@@ -26,7 +22,7 @@ public class Categoria implements Serializable {
 	//deste lado vai-se buscar os objetos, da parte do produto já nao se vai buscar mais(usando o JsonBack), assim o erro para. 
 	//ou seja classe categoria tem lista de produtos, classe produto tem lista categorias, tem de haver esta distincao para nao acontecer um ciclo infinito
 	//ou seja, categorias é que vão conter os produtos
-	@JsonManagedReference
+	
 	@ManyToMany(mappedBy= "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
