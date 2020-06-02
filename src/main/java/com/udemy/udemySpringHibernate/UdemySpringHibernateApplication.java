@@ -13,6 +13,7 @@ import com.udemy.udemySpringHibernate.domain.Cidade;
 import com.udemy.udemySpringHibernate.domain.Cliente;
 import com.udemy.udemySpringHibernate.domain.Endereco;
 import com.udemy.udemySpringHibernate.domain.Estado;
+import com.udemy.udemySpringHibernate.domain.ItemPedido;
 import com.udemy.udemySpringHibernate.domain.Pagamento;
 import com.udemy.udemySpringHibernate.domain.PagamentoComBoleto;
 import com.udemy.udemySpringHibernate.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.udemy.udemySpringHibernate.repositories.CidadeRepository;
 import com.udemy.udemySpringHibernate.repositories.ClienteRepository;
 import com.udemy.udemySpringHibernate.repositories.EnderecoRepository;
 import com.udemy.udemySpringHibernate.repositories.EstadoRepository;
+import com.udemy.udemySpringHibernate.repositories.ItemPedidoRepository;
 import com.udemy.udemySpringHibernate.repositories.PagamentoRepository;
 import com.udemy.udemySpringHibernate.repositories.PedidoRepository;
 import com.udemy.udemySpringHibernate.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -123,6 +127,18 @@ public class UdemySpringHibernateApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.0);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.0);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.0);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		
 		
 		
