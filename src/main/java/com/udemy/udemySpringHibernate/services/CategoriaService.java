@@ -3,10 +3,12 @@ package com.udemy.udemySpringHibernate.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.udemy.udemySpringHibernate.domain.Categoria;
 import com.udemy.udemySpringHibernate.repositories.CategoriaRepository;
+import com.udemy.udemySpringHibernate.services.exceptions.DataIntegrityException;
 import com.udemy.udemySpringHibernate.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,4 +36,15 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 
+	
+	public void delete(Integer id) {
+		//verificar se o id existe
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluír uma categoria porque possuí produtos");
+		}
+		
+	}
 }
