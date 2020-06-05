@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.udemy.udemySpringHibernate.domain.Cliente;
-import com.udemy.udemySpringHibernate.domain.Cliente;
 import com.udemy.udemySpringHibernate.dto.ClienteDTO;
 import com.udemy.udemySpringHibernate.repositories.ClienteRepository;
 import com.udemy.udemySpringHibernate.services.exceptions.DataIntegrityException;

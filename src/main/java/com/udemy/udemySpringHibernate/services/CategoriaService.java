@@ -35,11 +35,17 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
+		//procurar o cliente no BD e depois chamar updateData para atualizar apenas os novos valores que se quer (e os outros nao aparecer a null)
 		//é chamado o metodo find para verificar se já existe este id
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
-
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
+	
 	
 	public void delete(Integer id) {
 		//verificar se o id existe
