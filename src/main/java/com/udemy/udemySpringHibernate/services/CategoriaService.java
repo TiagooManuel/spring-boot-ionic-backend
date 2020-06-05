@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.udemy.udemySpringHibernate.domain.Categoria;
+import com.udemy.udemySpringHibernate.dto.CategoriaDTO;
 import com.udemy.udemySpringHibernate.repositories.CategoriaRepository;
 import com.udemy.udemySpringHibernate.services.exceptions.DataIntegrityException;
 import com.udemy.udemySpringHibernate.services.exceptions.ObjectNotFoundException;
@@ -62,4 +63,8 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
+	//a partir do DTO, construir um objeto Categoria
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
+	}
 }

@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,8 @@ public class CategoriaController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	// @RequestBody - Json é convertido para objeto JAVA automaticamente
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		
 		// vai find o current request(/categorias) e definir o path /{id},
@@ -48,8 +51,8 @@ public class CategoriaController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
-		
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Categoria obj = service.fromDTO(objDTO);
 		// para confirmar se o objeto atualizado é mesmo o que queremos
 		// mais para a frente isto vai ser mudado para DTO
 		obj.setId(id);
